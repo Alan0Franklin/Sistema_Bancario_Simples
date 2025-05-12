@@ -24,7 +24,7 @@ ContaBancaria::ContaBancaria(int numero, Cliente &titular, double saldo){
 // Depositar valor na Conta Bancária
 // Mostra mensagem de erro caso tente ser depositado valor negativo ou nulo
 void ContaBancaria::depositar(double valor){
-    if (valor < 0){
+    if (valor <= 0){
         std::cout << "Erro: Operação de depósito de R$ " << valor << " na conta " << this->numero << " não cumprida. Motivo: Valor negativo ou nulo." << std::endl;
     }
     else{
@@ -36,12 +36,12 @@ void ContaBancaria::depositar(double valor){
 // Sacar valor na Conta Bancária
 // Mostra mensagem de erro caso não haja saldo suficiente ou caso tente ser sacado valor negativo
 void ContaBancaria::sacar(double valor){
-    if (this->saldo >= valor){
+    if (valor <= 0){
+        std::cout << "Erro: Operação de sacar de R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Valor negativo ou nulo." << std::endl;
+    }
+    else if (this->saldo >= valor){
         this->saldo -= valor;
         std::cout << "Sacado: R$ " << valor << " da conta " << this->numero << std::endl;
-    }
-    else if (valor <= 0){
-        std::cout << "Erro: Operação de sacar de R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Valor negativo ou nulo." << std::endl;
     }
     else {std::cout << "Erro: Operação de sacar R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Não há saldo suficiente." << std::endl;}
 }
@@ -49,13 +49,13 @@ void ContaBancaria::sacar(double valor){
 // Transferir valor de uma conta para outra
 // Mostra mensagem de erro caso não haja saldo suficiente ou caso tente ser transferido valor negativo
 void ContaBancaria::transferir(double valor, ContaBancaria &conta){
-    if (this->saldo >= valor){
+    if (saldo <= 0){
+        std::cout << "Erro: Operação de transferir R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Valor negativo ou nulo." << std::endl;
+    }
+    else if (this->saldo >= valor){
         this->saldo -= valor;
         conta.saldo += valor;
         std::cout << "Transferido: R$ " << valor << " da conta " << this->numero << " para a conta " << conta.numero << std::endl;
-    }
-    else if (saldo <= 0){
-        std::cout << "Erro: Operação de transferir R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Valor negativo ou nulo." << std::endl;
     }
     else {std::cout << "Erro: Operação de transferir R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Não há saldo suficiente." << std::endl;}
 }
@@ -63,14 +63,14 @@ void ContaBancaria::transferir(double valor, ContaBancaria &conta){
 // Transferir valor distribuido igualmente de uma conta para duas outras
 // Mostra mensagem de erro caso não haja saldo suficiente ou caso tente ser transferido valor negativo ou nulo
 void ContaBancaria::transferir(double valor, ContaBancaria &conta1, ContaBancaria &conta2){
-    if (this->saldo >= valor){
+    if (saldo <= 0){
+        std::cout << "Erro: Operação de transferir R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Valor negativo ou nulo." << std::endl;
+    }
+    else if (this->saldo >= valor){
         this->saldo -= valor;
         conta1.saldo += valor/2;
         conta2.saldo += valor/2;
         std::cout << "Transferido: R$ " << valor/2 << " para cada conta (" << conta1.numero << " e " << conta2.numero << ") da conta " << this->numero << std::endl;
-    }
-    else if (saldo <= 0){
-        std::cout << "Erro: Operação de transferir R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Valor negativo ou nulo." << std::endl;
     }
     else {std::cout << "Erro: Operação de transferir R$ " << valor << " da conta " << this->numero << " não cumprida. Motivo: Não há saldo suficiente." << std::endl;}
 }
